@@ -6,6 +6,9 @@
 html {
   box-sizing: border-box;
   scroll-behavior: smooth;
+  padding: 0;
+  margin: 0;
+  /* outline: 2px solid red; */
 }
 
 body {

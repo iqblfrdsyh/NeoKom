@@ -1,4 +1,4 @@
-const Home = () => {
+const Homepage = () => {
   return (
     <section className="h-screen">
       <h2>Welcome To NeoKom</h2>
@@ -6,4 +6,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Homepage;
