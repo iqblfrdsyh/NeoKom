@@ -14,10 +14,10 @@ const App = ({ children }) => {
   return (
     <React.Fragment>
       {!shouldHideMenu && <NavigationBar />}
-      <main className={!shouldHideMenu ? "px-[50px]" : undefined}>
+      <main className={!shouldHideMenu ? "px-[50px] relative" : undefined}>
         {children}
       </main>
-      {!shouldHideMenu && <Footer />}
+      {/* {!shouldHideMenu && <Footer />} */}
     </React.Fragment>
   );
 };

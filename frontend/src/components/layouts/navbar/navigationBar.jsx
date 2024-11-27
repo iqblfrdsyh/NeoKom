@@ -1,5 +1,5 @@
 import React from "react";
-import { Settings, User, Award, ChevronDown, LogOut } from "lucide-react";
+import { User, Award, ChevronDown, LogOut } from "lucide-react";
 import {
   NavigationMenu,
   NavigationMenuList,
@@ -17,8 +17,8 @@ import MenuList from "./menulist";
 
 const NavigationBar = () => {
   return (
-    <div className="bg-white shadow-md">
-      <div className="container mx-auto px-[50px] py-3 flex items-center justify-between">
+    <div className="bg-white shadow-none">
+      <div className="px-[50px] py-5 flex items-center justify-between">
         <div>
           <Image
             src="/assets/images/neokom-logo.svg"
@@ -45,7 +45,7 @@ const NavigationBar = () => {
               >
                 <Avatar>
                   <AvatarImage src="https://play-lh.googleusercontent.com/qO_I-Nigv3fdfQeifs99eAOhDCmaIY9XC0O4WVbZAoU8wpZ9IWzNPmZwL4zmjYGUtow=w526-h296-rw" />
-                  <AvatarFallback>Chika</AvatarFallback>
+                  <AvatarFallback className="text-[10px]">Chika</AvatarFallback>
                 </Avatar>
                 <ChevronDown />
               </Button>
