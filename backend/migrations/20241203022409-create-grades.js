@@ -2,35 +2,23 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Users', {
+    await queryInterface.createTable('Grades', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      fullName: {
+      studentAssignmentId: {
+        type: Sequelize.INTEGER,
+        references: { model: 'StudentAssignments', key: 'id'},
+        onDelete: 'CASCADE',
+      },
+      grade: {
+        type: Sequelize.INTEGER
+      },
+      comments: {
         type: Sequelize.STRING
-      },
-      email: {
-        type: Sequelize.STRING
-      },
-      username: {
-        type: Sequelize.STRING
-      },
-      password: {
-        type: Sequelize.TEXT
-      },
-      no_handphone: {
-        type: Sequelize.STRING
-      },
-      profile: {
-        type: Sequelize.TEXT
-      },
-      role: {
-        type: Sequelize.ENUM('Siswa','Guru','Admin'),
-        defaultValue: 'Siswa',
-        allowNull: false
       },
       createdAt: {
         allowNull: false,
@@ -43,6 +31,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Users');
+    await queryInterface.dropTable('Grades');
   }
 };

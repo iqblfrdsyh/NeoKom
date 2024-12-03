@@ -18,7 +18,7 @@ const authenticate = (req, res, next) => {
         req.user = decoded; // Simpan data user ke request
         next();
     } catch (err) {
-        return res.status(401).json({ message: 'Invalid or expired token' });
+        return res.status(401).json({ message: 'Login terlebih dahulu or expired token' });
     }
 };
 

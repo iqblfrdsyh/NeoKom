@@ -1,6 +1,8 @@
 const express = require('express');
 const dotenv = require('dotenv');
-const UserRoutes = require('./routes/UserRoutes');
+const UserRoutes = require('./routes/UsersRoutes');
+const AssignmentsRoutes = require('./routes/AssignmentsRoutes');
+const StudentAssignmentsRoutes = require('./routes/StudentAssignmentsRoutes');
 const authenticate = require('./middlewares/UserMiddlewares'); // Pastikan path sesuai dengan struktur folder Anda
 
 
@@ -13,7 +15,9 @@ const app = express();
 app.use(express.json());
 
 // Rute untuk autentikasi
-app.use('/user', UserRoutes);
+app.use('/users', UserRoutes);
+app.use('/assignments', AssignmentsRoutes);
+app.use('/student', StudentAssignmentsRoutes);
 
 // Rute protected
 app.get('/protected', authenticate, (req, res) => {
