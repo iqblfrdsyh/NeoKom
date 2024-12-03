@@ -1,9 +1,11 @@
-const Home = () => {
+import React from "react";
+
+const Homepage = () => {
   return (
-    <section className="h-screen">
-      <h2>Welcome To NeoKom</h2>
-    </section>
+    <React.Fragment>
+      <h2>Test</h2>
+    </React.Fragment>
   );
 };
 
-export default Home;
+export default Homepage;
