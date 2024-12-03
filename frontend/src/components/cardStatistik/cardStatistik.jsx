@@ -1,5 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card";
 import Image from "next/image";
+import { Icons } from "../icons/icons";
 
 const CardStatistik = (props) => {
   return (
@@ -10,7 +11,7 @@ const CardStatistik = (props) => {
       </CardContent>
       <div className="absolute bottom-0 right-0 w-16 h-16 transform translate-x-[8.8px] translate-y-[1.3px]">
         <Image
-          src={"/assets/images/icons/paper.svg"}
+          src={Icons.Paper}
           alt="paper"
           fill
           draggable={false}

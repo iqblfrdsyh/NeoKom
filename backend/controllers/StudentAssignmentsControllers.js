@@ -1,16 +1,14 @@
-const { StudentAssignments, Assignments } = require("../models");
+const { StudentAssignments, Assignments } = require("../helper/relation"); // import dari relasi
 
 exports.getAllStudentAssignments = async (req, res) => {
   try {
-    const userId = req.user.id; // Pastikan userId diambil dari middleware autentikasi
-
-    // Ambil data tugas berdasarkan studentId (user yang login)
+    const userId = req.user.id;
     const studentAssignments = await StudentAssignments.findAll({
-      where: { studentId: userId }, // Filter berdasarkan user yang login
+      where: { studentId: userId },
       include: [
         {
-          model: Assignments, // Relasi ke tabel Assignments
-          attributes: ["id", "title", "description", "due_date"], // Data yang diambil dari tabel Assignments
+          model: Assignments,
+          attributes: ["id", "title", "description", "due_date"],
         },
       ],
     });
@@ -33,10 +31,8 @@ exports.createStudentAssignment = async (req, res) => {
   try {
     const { assignmentId, studentId, file_url } = req.body;
 
-    // Tentukan status berdasarkan file_url
     const status = file_url ? "Sudah Dikerjakan" : "Belum Dikerjakan";
 
-    // Buat data baru
     const newStudentAssignment = await StudentAssignments.create({
       assignmentId,
       studentId,

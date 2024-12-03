@@ -20,7 +20,7 @@ const Notification = () => {
             <CardContent className="flex items-center justify-between p-4">
               <div>
                 <h3 className="font-semibold text-lg">{item.title}</h3>
-                <Button className="mt-2 px-4 py-2 text-sm font-medium text-white bg-[#0A355D] rounded-md">
+                <Button className="mt-2 px-4 py-2 text-sm font-medium text-white bg-[#0A355D] rounded-md hover:bg-[#0a355ddb]">
                   Selesaikan Sekarang!
                 </Button>
               </div>

@@ -1,4 +1,4 @@
-const { Users } = require("../models");
+const { Users } = require("../helper/relation"); // import dari relasi
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 

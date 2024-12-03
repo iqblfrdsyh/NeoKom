@@ -1,4 +1,4 @@
-const { Assignments } = require("../models");
+const { Assignments } = require("../helper/relation"); // import dari relasi
 
 exports.getAllAssignments = async (req, res) => {
   try {
@@ -12,7 +12,8 @@ exports.getAllAssignments = async (req, res) => {
 exports.getAssignmentsById = async (req, res) => {
   try {
     const assignment = await Assignments.findByPk(req.params.id);
-    if (!assignment) return res.status(404).json({ error: "Assignment tidak ditemukan" });
+    if (!assignment)
+      return res.status(404).json({ error: "Assignment tidak ditemukan" });
     res.status(200).json(assignment);
   } catch (error) {
     res.status(500).json({ error: "Gagal Mendapatkan Assignment" });
@@ -23,7 +24,11 @@ exports.createAssignments = async (req, res) => {
   try {
     const { title, description, due_date } = req.body;
 
-    const assignment = await Assignments.create({ title, description, due_date });
+    const assignment = await Assignments.create({
+      title,
+      description,
+      due_date,
+    });
     res.status(201).json(assignment);
   } catch (error) {
     res.status(400).json({ error: "Gagal membuat Assignment baru" });
@@ -39,8 +44,9 @@ exports.updateAssignments = async (req, res) => {
     if (!assignment)
       return res.status(404).json({ error: "Assignment Tidak Ditemukan" });
 
-    await assignment.update({ title, description, due_date },
-      { where: {id: id}}
+    await assignment.update(
+      { title, description, due_date },
+      { where: { id: id } }
     );
     res.status(200).json(assignment);
   } catch (error) {
@@ -59,9 +65,9 @@ exports.deleteAssignments = async (req, res) => {
       return res.status(404).json({ error: "Assignment Tidak Ditemukan" });
 
     // Validasi apakah user adalah seorang Guru
-//     if (req.user.role !== 'Guru' && req.user.role !== 'Admin') {
-//       return res.status(403).json({ error: "Kamu Tidak Berhak Mengedit Content" });
-//   }
+    //     if (req.user.role !== 'Guru' && req.user.role !== 'Admin') {
+    //       return res.status(403).json({ error: "Kamu Tidak Berhak Mengedit Content" });
+    //   }
 
     await assignment.destroy({ where: { id: id } });
     res.status(200).json({ message: "Assignment Berhasil Dihapus" });
