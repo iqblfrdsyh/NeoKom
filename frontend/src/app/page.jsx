@@ -24,7 +24,14 @@ const Homepage = () => {
           </h2>
           <Notification />
         </div>
-        <PieChart />
+        <div>
+          <h2 className="text-2xl text-black font-bold tracking-[1px] ml-4 mb-4">
+            Statistik Tugas
+          </h2>
+          <div className="bg-white rounded-md shadow-[0_2px_7px_rgba(0,0,0,0.2)]">
+            <PieChart />
+          </div>
+        </div>
       </div>
     </React.Fragment>
   );
