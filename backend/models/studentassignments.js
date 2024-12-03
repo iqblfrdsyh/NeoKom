@@ -11,11 +11,13 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      StudentAssignments.belongsTo(models.Assignments, { foreignKey: 'assignmentId' });
     }
   }
   StudentAssignments.init({
     assigmentId: DataTypes.INTEGER,
     studentId: DataTypes.INTEGER,
+    status: DataTypes.ENUM('Sudah Dikerjakan', 'Belum Dikerjakan'),
     file_url: DataTypes.TEXT
   }, {
     sequelize,

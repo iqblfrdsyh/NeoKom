@@ -1,10 +1,19 @@
 const express = require('express');
-const { register, login } = require('../controller/UserController');
 const authenticate = require('../middlewares/UserMiddlewares');
 const router = express.Router();
+const { 
+    register,
+    login,
+    getAllUsers,
+    getUsersById,
+    updateUsers } = require('../controllers/UsersControllers');
+
 
 router.post('/register', register);
 router.post('/login', login);
+router.get('/', getAllUsers);
+router.get('/:id', getUsersById);
+router.put('/:id', updateUsers);
 
 // Rute logout menggunakan middleware authenticate
 router.post('/logout', authenticate, (req, res) => {
