@@ -1,7 +1,7 @@
 // ini buat relasi database yaa
 
+const sequelize = require("../models/index.js").sequelize;
 const { DataTypes } = require("sequelize");
-const { sequelize } = require("../models");
 
 const Users = require("../models/users")(sequelize, DataTypes);
 const StudentAssignments = require("../models/studentassignments")(
@@ -10,24 +10,26 @@ const StudentAssignments = require("../models/studentassignments")(
 );
 const Assignments = require("../models/assignments")(sequelize, DataTypes);
 
-Users.hasMany(StudentAssignments, { // user punya banyak assignment
+Users.hasMany(StudentAssignments, {
+  // user punya banyak assignment
   foreignKey: "studentId",
-  as: "assignments", 
+  as: "assignments",
 });
 
-StudentAssignments.belongsTo(Users, { 
+StudentAssignments.belongsTo(Users, {
   foreignKey: "studentId",
-  as: "students", 
+  as: "students",
 });
 
-Assignments.hasMany(StudentAssignments, { // assignment punya banyak studentAssignment
+Assignments.hasMany(StudentAssignments, {
+  // assignment punya banyak studentAssignment
   foreignKey: "assignmentId",
-  as: "studentAssignment", 
+  as: "studentAssignment",
 });
 
 StudentAssignments.belongsTo(Assignments, {
   foreignKey: "assignmentId",
-  as: "assignments",  
+  as: "assignments",
 });
 
-export { Users, StudentAssignments, Assignments };
+module.exports = { Users, StudentAssignments, Assignments };
