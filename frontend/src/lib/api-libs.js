@@ -11,6 +11,19 @@ export async function login(endpoint, data) {
   }
 }
 
+export async function logout(endpoint, token) {
+  try {
+    const response = await axios.post(`${base_url}/${endpoint}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export async function isLogin(endpoint, token) {
   try {
     const response = await axios.get(`${base_url}/${endpoint}`, {
