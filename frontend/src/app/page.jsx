@@ -6,7 +6,7 @@ import PieChart from "@/components/pieChart/pieChart";
 
 const Homepage = () => {
   return (
-    <React.Fragment className="mb-20">
+    <React.Fragment>
       <div className="flex items-center justify-between">
         <div>
           <p className="text-[17px] tracking-[1px] opacity-90">Welcome</p>
@@ -17,7 +17,7 @@ const Homepage = () => {
         <ProfileMenu />
       </div>
       <StatistikUser />
-      <div className="bg-white rounded-md grid grid-cols-2 gap-5 px-5 py-7 mt-20 ">
+      <div className="bg-white rounded-md grid grid-cols-2 gap-5 px-5 py-7 mt-20 mb-16">
         <div>
           <h2 className="text-2xl text-black font-bold tracking-[1px] ml-4">
             Notikasi Tugas

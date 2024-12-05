@@ -20,6 +20,10 @@ body {
   /* height: 1000vh; */
 }
 
+ul {
+  list-style-type: disc;
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;

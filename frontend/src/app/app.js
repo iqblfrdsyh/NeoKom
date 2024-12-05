@@ -2,7 +2,7 @@
 
 import { usePathname } from "next/navigation";
 import { ThemeProvider } from "@material-tailwind/react";
-import React, { useEffect } from "react";
+import React, { useEffect, useCallback } from "react";
 import SidebarUser from "@/components/layouts/sidebar/sidebar";
 import { isLogin } from "@/lib/api-libs";
 
@@ -11,28 +11,31 @@ const App = ({ children }) => {
   const hiddenPaths = ["/signin"];
   const shouldHideMenu = hiddenPaths.includes(pathname);
 
+  const middleware = useCallback(async (token) => {
+    try {
+      const response = await isLogin("protected", token);
+      if (response.status === 403) {
+        console.error("Forbidden access, redirecting to signin...");
+        window.location.href = "/signin";
+      } else {
+        console.log("Authentication success:", response);
+      }
+    } catch (error) {
+      console.error("Authentication failed:", error);
+      window.location.href = "/signin";
+    }
+  }, []);
+
   useEffect(() => {
     if (pathname === "/signin") return;
 
     const token = localStorage.getItem("token");
-
-    const middleware = async () => {
-      try {
-        const response = await isLogin("protected", token);
-        if (response.status === 403) {
-          console.error("Forbidden access, redirecting to signin...");
-          window.location.href = "/signin";
-        } else {
-          console.log("Authentication success:", response);
-        }
-      } catch (error) {
-        console.error("Authentication failed:", error);
-        window.location.href = "/signin";
-      }
-    };
-
-    middleware();
-  }, [pathname]);
+    if (token) {
+      middleware(token);
+    } else {
+      window.location.href = "/signin";
+    }
+  }, [pathname, middleware]);
 
   return (
     <ThemeProvider>
@@ -44,7 +47,7 @@ const App = ({ children }) => {
         )}
 
         <div
-          className={shouldHideMenu ? "" : "px-6 pt-6 mb-20"}
+          className={shouldHideMenu ? "" : "px-6 pt-6"}
           style={{ paddingLeft: shouldHideMenu ? "0" : "19.5rem" }}
         >
           {children}
