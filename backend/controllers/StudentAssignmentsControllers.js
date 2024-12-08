@@ -11,6 +11,7 @@ exports.getAllStudentAssignments = async (req, res) => {
         {
           model: Assignments,
           attributes: ["id", "title", "description", "due_date"],
+          as: "assignments"
         },
       ],
     });

@@ -7,7 +7,7 @@ import Image from "next/image";
 import React, { useState } from "react";
 import Swal from "sweetalert2";
 
-const Signinpage = () => {
+const SigninPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -28,7 +28,7 @@ const Signinpage = () => {
     } catch (error) {
       Swal.fire({
         title: "Error!",
-        text: error.message || "Login failed. Please try again.",
+        text: "Email Atau Password Salah" || error.message,
         icon: "error",
         confirmButtonText: "Try Again",
       });
@@ -122,4 +122,4 @@ const Signinpage = () => {
   );
 };
 
-export default Signinpage;
+export default SigninPage;

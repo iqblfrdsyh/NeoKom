@@ -1,9 +1,24 @@
-import { Tables } from "@/components/tables/tables";
+"use client";
+
+import Tables from "@/components/tables/tables";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { tasks } from "@/data/data-dummy";
-import React from "react";
+import { getData } from "@/lib/api-libs";
+import { getDataUser, getToken } from "@/lib/utils";
+import React, { useEffect, useState } from "react";
 
 const DaftarTugas = () => {
+  const [tasks, setTasks] = useState([]);
+
+  const user = JSON.parse(getDataUser());
+
+  useEffect(() => {
+    const getTasks = async () => {
+      const response = await getData("assignments", getToken());
+      setTasks(response.data);
+    };
+    getTasks();
+  }, []);
+
   return (
     <div>
       <div>
@@ -14,8 +29,8 @@ const DaftarTugas = () => {
           Daftar tugas Anda yang harus di kerjakan
         </p>
       </div>
-      <ScrollArea className="bg-white py-5 px-7 rounded-md mt-10 h-[520px]">
-        <Tables.TableDaftarTugas tasks={tasks} />
+      <ScrollArea className="bg-white py-5 px-7 rounded-md mt-10 mb-16 h-[520px]">
+        <Tables.TableDaftarTugas tasks={tasks} kelas={user.kelas} />
       </ScrollArea>
     </div>
   );

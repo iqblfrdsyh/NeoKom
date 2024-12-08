@@ -3,6 +3,11 @@ const Icons = {
   Assignment: "/assets/images/icons/assignments.svg",
   History: "/assets/images/icons/history.svg",
   Profile: "/assets/images/icons/profile.svg",
+  Users: "/assets/images/icons/users.svg",
+  StudentAssigments: "/assets/images/icons/studentAssignments.svg",
+  UsersActive: "/assets/images/icons/active/usersActive.svg",
+  StudentAssigmentsActive:
+    "/assets/images/icons/active/studentAssignmentsActive.svg",
   DashboardActive: "/assets/images/icons/active/dashboardActive.svg",
   AssignmentActive: "/assets/images/icons/active/assignmentActive.svg",
   HistoryActive: "/assets/images/icons/active/historyActive.svg",

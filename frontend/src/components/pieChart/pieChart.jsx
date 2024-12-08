@@ -6,13 +6,13 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-const PieChart = () => {
+const PieChart = ({ totalTugas, tugasSelesai, belumSelesai }) => {
   const data = {
     labels: ["Total Tugas", "Tugas Selesai", "Belum di Kerjakan"],
     datasets: [
       {
         label: "Jumlah Tugas",
-        data: [808, 351, 231],
+        data: [totalTugas, tugasSelesai, belumSelesai],
         backgroundColor: ["#39566C", "#6A9EC6", "#418B73"],
         borderWidth: 1,
         borderColor: "#fff",
@@ -53,9 +53,15 @@ const PieChart = () => {
     },
   };
 
+  const isDataEmpty = !totalTugas && !tugasSelesai && !belumSelesai;
+
   return (
     <div className="w-[400px] p-4 mx-auto">
-      <Pie {...config}  />
+      {isDataEmpty ? (
+        <h2 className="text-black">Data Masih Kosong</h2>
+      ) : (
+        <Pie {...config} />
+      )}
     </div>
   );
 };

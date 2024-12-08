@@ -1,22 +1,22 @@
 import React from "react";
 import CardStatistik from "../cardStatistik/cardStatistik";
 
-const StatistikUser = () => {
+const StatistikUser = ({ totalTugas, tugasSelesai, belumSelesai }) => {
   const dataStatistik = [
     {
       id: 1,
       title: "Total Tugas",
-      total: 15,
+      total: totalTugas,
     },
     {
       id: 2,
       title: "Tugas Selesai",
-      total: 10,
+      total: tugasSelesai,
     },
     {
       id: 3,
       title: "Belum Selesai",
-      total: 5,
+      total: belumSelesai,
     },
   ];
   return (

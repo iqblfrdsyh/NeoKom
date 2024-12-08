@@ -1,14 +1,14 @@
-const express = require('express');
-const dotenv = require('dotenv');
-const UserRoutes = require('./routes/UsersRoutes');
-const AssignmentsRoutes = require('./routes/AssignmentsRoutes');
-const StudentAssignmentsRoutes = require('./routes/StudentAssignmentsRoutes');
-const GradesRoutes = require('./routes/GradesRoutes');
-const HistoriesRoutes = require('./routes/HistoriesRoutes');
-const DashboardRoutes = require('./routes/DashboardRoutes');
-const authenticate = require('./middlewares/UserMiddlewares'); // Pastikan path sesuai dengan struktur folder Anda
-const path = require('path');
-
+const express = require("express");
+const dotenv = require("dotenv");
+const UserRoutes = require("./routes/UsersRoutes");
+const AssignmentsRoutes = require("./routes/AssignmentsRoutes");
+const StudentAssignmentsRoutes = require("./routes/StudentAssignmentsRoutes");
+const GradesRoutes = require("./routes/GradesRoutes");
+const HistoriesRoutes = require("./routes/HistoriesRoutes");
+const DashboardRoutes = require("./routes/DashboardRoutes");
+const authenticate = require("./middlewares/UserMiddlewares"); // Pastikan path sesuai dengan struktur folder Anda
+const path = require("path");
+const cors = require("cors");
 
 // Load environment variables from .env file
 dotenv.config();
@@ -21,22 +21,25 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
 // Rute untuk autentikasi
-app.use('/users', UserRoutes);
-app.use('/assignments', AssignmentsRoutes);
-app.use('/student', StudentAssignmentsRoutes);
-app.use('/grade', GradesRoutes);
-app.use('/histori', HistoriesRoutes);
-app.use('/dashboardStudent', DashboardRoutes);
+app.use("/users", UserRoutes);
+app.use("/assignments", AssignmentsRoutes);
+app.use("/student", StudentAssignmentsRoutes);
+app.use("/grade", GradesRoutes);
+app.use("/histori", HistoriesRoutes);
+app.use("/dashboardStudent", DashboardRoutes);
 
 // Middleware untuk menyajikan file statis di folder "UploadModul"
-app.use('/UploadModul', express.static(path.join(__dirname, 'UploadModul')));
+app.use("/UploadModul", express.static(path.join(__dirname, "UploadModul")));
 
 // Middleware untuk menyajikan file statis di folder "UploadJawaban"
-app.use('/UploadJawaban', express.static(path.join(__dirname, 'UploadJawaban')));
+app.use(
+  "/UploadJawaban",
+  express.static(path.join(__dirname, "UploadJawaban"))
+);
 
 // Rute protected
 app.get("/protected", authenticate, (req, res) => {
-  res.status(200).json({ message: `Hello, ${req.user.email}` });
+  res.status(200).json({ message: `Hello, ${req.user.email}`, data: req.user });
 });
 
 // Error handling middleware

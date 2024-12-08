@@ -22,12 +22,14 @@ exports.register = async (req, res) => {
 exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
+
     // Cek apakah input email dan password dikirim
     if (!email || !password) {
       return res
         .status(400)
         .json({ message: "Email and password are required" });
     }
+
     // Cari user berdasarkan email
     const user = await Users.findOne({ where: { email } });
     if (!user) {
@@ -39,14 +41,32 @@ exports.login = async (req, res) => {
     if (!isPasswordValid) {
       return res.status(401).json({ message: "Invalid password" });
     }
+
     // Generate token
     const token = jwt.sign(
-      { id: user.id, email: user.email, kelas: user.kelas, role: user.role },
+      {
+        id: user.id,
+        fullName: user.fullName,
+        email: user.email,
+        kelas: user.kelas,
+        role: user.role,
+      },
       process.env.JWT_SECRET,
       { expiresIn: "6h" } // Token berlaku selama 6 jam
     );
-    // Kirim response
-    res.status(200).json({ message: "Login successful", token });
+
+    // Kirim response dengan data user dan token
+    res.status(200).json({
+      message: "Login successful",
+      token,
+      user: {
+        id: user.id,
+        fullName: user.fullName,
+        email: user.email,
+        kelas: user.kelas,
+        role: user.role,
+      },
+    });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -77,20 +97,47 @@ exports.updateUsers = async (req, res) => {
     const { fullName, email, password, role } = req.body;
 
     const user = await Users.findByPk(id);
-    if (!user) return res.status(404).json({ error: "user Tidak Ditemukan" });
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
 
     const updateData = { fullName, email, role };
 
-    // Enkripsi password jika ada
     if (password) {
       const salt = await bcrypt.genSalt(10);
       updateData.password = await bcrypt.hash(password, salt);
     }
+
     await user.update(updateData);
-    res.status(200).json({ message: "User berhasil diupdate", user });
+
+    res
+      .status(200)
+      .json({ message: "User successfully updated", user: updateData });
   } catch (error) {
+    console.error(error);
     res
       .status(400)
-      .json({ error: "Gagal Update User", details: error.message });
+      .json({ error: "Failed to update user", details: error.message });
   }
 };
+
+exports.deleteUser = async (req, res) => {
+  try {
+    const { id } = req.query;
+
+    const user = await Users.findByPk(id);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    await user.destroy();
+
+    res.status(200).json({ message: "User successfully deleted" });
+  } catch (error) {
+    console.error(error);
+    res
+      .status(500)
+      .json({ message: "Failed to delete user", details: error.message });
+  }
+};
+
