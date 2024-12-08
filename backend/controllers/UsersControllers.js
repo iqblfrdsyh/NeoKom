@@ -87,8 +87,10 @@ exports.updateUsers = async (req, res) => {
       updateData.password = await bcrypt.hash(password, salt);
     }
     await user.update(updateData);
-    res.status(200).json({ message: 'User berhasil diupdate', user });
+    res.status(200).json({ message: "User berhasil diupdate", user });
   } catch (error) {
-    res.status(400).json({ error: 'Gagal Update User', details: error.message });
+    res
+      .status(400)
+      .json({ error: "Gagal Update User", details: error.message });
   }
 };

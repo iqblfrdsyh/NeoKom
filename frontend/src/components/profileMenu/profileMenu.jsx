@@ -11,17 +11,39 @@ import {
   Avatar,
 } from "@material-tailwind/react";
 import { FaSignOutAlt } from "react-icons/fa";
-
-const profileMenuItems = [
-  {
-    label: "Sign Out",
-    icon: <FaSignOutAlt className="h-4 w-4" />,
-  },
-];
+import { getToken } from "@/lib/utils";
+import Swal from "sweetalert2";
+import { logout } from "@/lib/api-libs";
 
 const ProfileMenu = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const closeMenu = () => setIsMenuOpen(false);
+  // const closeMenu = () => setIsMenuOpen(false);
+
+  const token = getToken();
+
+  const handleLogout = async (e) => {
+    e.preventDefault();
+
+    try {
+      await logout("users/logout", token);
+      localStorage.removeItem("token");
+      Swal.fire({
+        title: "Success!",
+        text: "You have successfully logout.",
+        icon: "success",
+        confirmButtonText: "OK",
+      }).then(() => {
+        window.location.href = "/signin";
+      });
+    } catch (error) {
+      Swal.fire({
+        title: "Error!",
+        text: error.message || "logout failed. Please try again.",
+        icon: "error",
+        confirmButtonText: "Try Again",
+      });
+    }
+  };
 
   return (
     <Menu open={isMenuOpen} handler={setIsMenuOpen} placement="bottom-end">
@@ -41,30 +63,22 @@ const ProfileMenu = () => {
         </Button>
       </MenuHandler>
       <MenuList className="p-1">
-        {profileMenuItems.map(({ label, icon }, key) => {
-          const isLastItem = key === profileMenuItems.length - 1;
-          return (
-            <MenuItem
-              key={label}
-              onClick={closeMenu}
-              className={`flex items-center gap-2 rounded ${
-                isLastItem
-                  ? "hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10"
-                  : ""
-              }`}
-            >
-              {icon}
-              <Typography
-                as="span"
-                variant="small"
-                className="font-normal"
-                color={isLastItem ? "red" : "inherit"}
-              >
-                {label}
-              </Typography>
-            </MenuItem>
-          );
-        })}
+        <MenuItem
+          onClick={handleLogout}
+          className={
+            "flex items-center gap-2 rounded hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10"
+          }
+        >
+          <FaSignOutAlt className="h-4 w-4" />
+          <Typography
+            as="span"
+            variant="small"
+            className="font-normal"
+            color={"red"}
+          >
+            Sign Out
+          </Typography>
+        </MenuItem>
       </MenuList>
     </Menu>
   );
