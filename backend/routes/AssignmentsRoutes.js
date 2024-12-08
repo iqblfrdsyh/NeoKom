@@ -11,7 +11,7 @@ const {
 router.post('/', createAssignments);
 router.get('/', getAllAssignments);
 router.get('/:id', getAssignmentsById);
-router.put('/:id', updateAssignments);
+// router.put('/:id', updateAssignments);
 router.delete('/:id', deleteAssignments);
 
 module.exports = router;

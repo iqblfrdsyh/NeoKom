@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   StudentAssignments.init({
-    assigmentId: DataTypes.INTEGER,
+    assignmentId: DataTypes.INTEGER,
     studentId: DataTypes.INTEGER,
     status: DataTypes.ENUM('Sudah Dikerjakan', 'Belum Dikerjakan'),
     file_url: DataTypes.TEXT

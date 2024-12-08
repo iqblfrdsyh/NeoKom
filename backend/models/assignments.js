@@ -18,6 +18,7 @@ module.exports = (sequelize, DataTypes) => {
   Assignments.init({
     title: DataTypes.STRING,
     description: DataTypes.TEXT,
+    file_url: DataTypes.TEXT,
     due_date: DataTypes.DATE
   }, {
     sequelize,

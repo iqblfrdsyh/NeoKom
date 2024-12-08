@@ -15,6 +15,12 @@ module.exports = {
       description: {
         type: Sequelize.TEXT
       },
+      kelas: {
+        type: Sequelize.TEXT
+      },
+      file_url: {
+        type: Sequelize.TEXT
+      },
       due_date: {
         type: Sequelize.DATE
       },

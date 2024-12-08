@@ -9,7 +9,7 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      assigmentId: {
+      assignmentId: {
         type: Sequelize.INTEGER,
         references: { model: "Assignments", key: "id" },
         onDelete: "CASCADE",
@@ -21,6 +21,7 @@ module.exports = {
       },
       status: {
         type: Sequelize.ENUM('Sudah Dikerjakan', 'Belum Dikerjakan'),
+        defaultValue: "Belum Dikerjakan"
       },
       file_url: {
         type: Sequelize.TEXT,

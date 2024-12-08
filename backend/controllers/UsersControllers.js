@@ -4,12 +4,13 @@ const jwt = require("jsonwebtoken");
 
 exports.register = async (req, res) => {
   try {
-    const { fullName, email, password, role } = req.body;
+    const { fullName, email, password, kelas, role } = req.body;
     const hashedPassword = await bcrypt.hash(password, 10);
     const user = await Users.create({
       fullName,
       email,
       password: hashedPassword,
+      kelas,
       role,
     });
     res.status(201).json({ message: "Berhasil Membuat Akun", user });
@@ -40,7 +41,7 @@ exports.login = async (req, res) => {
     }
     // Generate token
     const token = jwt.sign(
-      { id: user.id, email: user.email, role: user.role },
+      { id: user.id, email: user.email, kelas: user.kelas, role: user.role },
       process.env.JWT_SECRET,
       { expiresIn: "6h" } // Token berlaku selama 6 jam
     );

@@ -18,6 +18,9 @@ module.exports = {
       password: {
         type: Sequelize.TEXT
       },
+      kelas: {
+        type: Sequelize.STRING
+      },
       role: {
         type: Sequelize.ENUM('student', 'teacher')
       },

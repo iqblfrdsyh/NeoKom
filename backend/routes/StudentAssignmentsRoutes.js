@@ -5,7 +5,7 @@ const {
     getAllStudentAssignments,
     createStudentAssignment } = require('../controllers/StudentAssignmentsControllers');
 
-router.post('/', createStudentAssignment);
+router.post('/', authenticate, createStudentAssignment);
 router.get('/', getAllStudentAssignments);
 
 module.exports = router;
