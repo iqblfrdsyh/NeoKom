@@ -30,22 +30,12 @@ const Notification = ({ dataAssignments, kelas }) => {
     return () => clearInterval(interval);
   }, [dataAssignments, kelas]);
 
-  const calculateRemainingTime = (time) => {
-    if (!time) return 0;
-    const match = time.match(/(\d+)/);
-    return match ? parseInt(match[0], 10) : 0;
-  };
-
   return (
     <ScrollArea className="h-96 w-full border outline-none border-none p-4">
       <div className="space-y-4">
         {dataAssignments
           .filter((assignment) => assignment.kelas === kelas)
           .sort((a, b) => new Date(a.due_date) - new Date(b.due_date))
-          .filter((assignment, index) => {
-            const time = timeLeft[index];
-            return time && calculateRemainingTime(time) <= 24;
-          })
           .map((item, index) => (
             <Card key={index}>
               <CardContent className="flex items-center justify-between p-4">
@@ -57,7 +47,7 @@ const Notification = ({ dataAssignments, kelas }) => {
                     </Button>
                   </Link>
                 </div>
-                <div className="flex flex-col items-center bg-white shadow-md py-2 px-5 rounded-md">
+                <div className="flex flex-col items-center bg-white shadow-md py-2 px-3 w-[190px] rounded-md">
                   <Image
                     src={Icons.Clock}
                     width={35}

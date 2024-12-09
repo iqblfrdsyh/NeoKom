@@ -47,19 +47,20 @@ export function calculateTimeLeft(dueDate) {
   const due = new Date(dueDate);
 
   const difference = due - now;
-  console.log({ due });
 
   let timeLeft = "";
 
   if (difference > 0) {
     const hours = Math.floor(difference / (1000 * 60 * 60));
+    const remainingDifference = difference % (1000 * 60 * 60);
+    const minutes = Math.floor(remainingDifference / (1000 * 60));
 
     if (hours > 0) {
       timeLeft += `${hours} jam `;
+      console.log({ timeLeft });
+    } else {
+      timeLeft += `${minutes} menit `;
     }
-    console.log(timeLeft);
-    
-
     timeLeft += "lagi!";
   } else {
     timeLeft = "Waktu sudah habis!";
