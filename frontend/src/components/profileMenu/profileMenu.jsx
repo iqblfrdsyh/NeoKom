@@ -14,9 +14,11 @@ import { FaSignOutAlt } from "react-icons/fa";
 import Swal from "sweetalert2";
 import { logout } from "@/lib/api-libs";
 import { getToken } from "@/lib/utils";
+import { usePathname } from "next/navigation";
 
 const ProfileMenu = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const pathname = usePathname();
   // const closeMenu = () => setIsMenuOpen(false);
 
   const token = getToken();
@@ -24,7 +26,6 @@ const ProfileMenu = () => {
   const handleLogout = async (e) => {
     e.preventDefault();
 
-    // Tampilkan dialog konfirmasi sebelum logout
     const result = await Swal.fire({
       title: "Are you sure?",
       text: "You will be logged out from the system.",
@@ -44,7 +45,9 @@ const ProfileMenu = () => {
           icon: "success",
           confirmButtonText: "OK",
         }).then(() => {
-          window.location.href = "/signin";
+          window.location.href = pathname.includes("admin")
+            ? "/admin/signin"
+            : "/signin";
         });
       } catch (error) {
         Swal.fire({

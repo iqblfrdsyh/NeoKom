@@ -15,7 +15,7 @@ const Dashboard = () => {
         <div>
           <p className="text-[17px] tracking-[1px] opacity-90">Welcome</p>
           <h1 className="text-[27px] tracking-[1px] font-semibold">
-            {user.fullName}
+            {user.fullName || "Admin"}
           </h1>
         </div>
         <ProfileMenu />
