@@ -16,15 +16,15 @@ const tasks = [
   {
     name: "Tugas I Struktur Pengulangan",
     deadline: "2 Desember 2024 Pukul 21:00",
-    status: "Belum Dikerjakan",
-    isCompleted: false,
+    status: "Sudah Dikerjakan",
+    isCompleted: true,
     action: { detail: true, upload: true },
   },
   {
     name: "Tugas I Struktur Pengulangan",
     deadline: "2 Desember 2024 Pukul 21:00",
-    status: "Belum Dikerjakan",
-    isCompleted: false,
+    status: "Sudah Dikerjakan",
+    isCompleted: true,
     action: { detail: true, upload: true },
   },
   {

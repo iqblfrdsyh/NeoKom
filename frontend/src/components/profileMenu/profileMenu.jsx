@@ -11,12 +11,14 @@ import {
   Avatar,
 } from "@material-tailwind/react";
 import { FaSignOutAlt } from "react-icons/fa";
-import { getToken } from "@/lib/utils";
 import Swal from "sweetalert2";
 import { logout } from "@/lib/api-libs";
+import { getToken } from "@/lib/utils";
+import { usePathname } from "next/navigation";
 
 const ProfileMenu = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const pathname = usePathname();
   // const closeMenu = () => setIsMenuOpen(false);
 
   const token = getToken();
@@ -24,24 +26,37 @@ const ProfileMenu = () => {
   const handleLogout = async (e) => {
     e.preventDefault();
 
-    try {
-      await logout("users/logout", token);
-      localStorage.removeItem("token");
-      Swal.fire({
-        title: "Success!",
-        text: "You have successfully logout.",
-        icon: "success",
-        confirmButtonText: "OK",
-      }).then(() => {
-        window.location.href = "/signin";
-      });
-    } catch (error) {
-      Swal.fire({
-        title: "Error!",
-        text: error.message || "logout failed. Please try again.",
-        icon: "error",
-        confirmButtonText: "Try Again",
-      });
+    const result = await Swal.fire({
+      title: "Are you sure?",
+      text: "You will be logged out from the system.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes, logout!",
+      cancelButtonText: "No, stay logged in",
+    });
+
+    if (result.isConfirmed) {
+      try {
+        await logout("users/logout", token);
+        localStorage.removeItem("token");
+        Swal.fire({
+          title: "Success!",
+          text: "You have successfully logged out.",
+          icon: "success",
+          confirmButtonText: "OK",
+        }).then(() => {
+          window.location.href = pathname.includes("admin")
+            ? "/admin/signin"
+            : "/signin";
+        });
+      } catch (error) {
+        Swal.fire({
+          title: "Error!",
+          text: error.message || "Logout failed. Please try again.",
+          icon: "error",
+          confirmButtonText: "Try Again",
+        });
+      }
     }
   };
 

@@ -4,7 +4,7 @@ import { Icons } from "../icons/icons";
 
 const CardStatistik = (props) => {
   return (
-    <Card className="w-64 h-40 relative bg-white border border-gray-300 rounded-none">
+    <Card className="w-full h-40 relative bg-white border border-gray-300 rounded-none">
       <CardContent className="flex flex-col items-center justify-center gap-2 h-full text-center mt-2">
         <h1 className="text-6xl font-bold text-[#0A355D]">{props.total}</h1>
         <p className="text-xl text-[#0A355D] font-semibold">{props.title}</p>

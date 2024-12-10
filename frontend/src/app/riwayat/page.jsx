@@ -1,4 +1,4 @@
-import { Tables } from "@/components/tables/tables";
+import Tables from "@/components/tables/tables";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { histories } from "@/data/data-dummy";
 import React from "react";
@@ -12,7 +12,7 @@ const Riwayat = () => {
           Daftar Riwayat pengumpulan tugas Anda
         </p>
       </div>
-      <ScrollArea className="bg-white py-5 px-7 rounded-md mt-10 h-[520px]">
+      <ScrollArea className="bg-white py-5 px-7 rounded-md mt-10 mb-16 h-[520px]">
         <Tables.TableRiwayat histories={histories} />
       </ScrollArea>
     </div>

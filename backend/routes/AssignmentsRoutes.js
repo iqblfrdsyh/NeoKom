@@ -12,6 +12,6 @@ router.post('/', createAssignments);
 router.get('/', getAllAssignments);
 router.get('/:id', getAssignmentsById);
 // router.put('/:id', updateAssignments);
-router.delete('/:id', deleteAssignments);
+router.delete('/delete', deleteAssignments);
 
 module.exports = router;

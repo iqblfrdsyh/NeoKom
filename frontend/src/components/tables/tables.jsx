@@ -8,36 +8,30 @@ import {
 } from "@/components/ui/table";
 import { FaCheck } from "react-icons/fa";
 import { FiFileText, FiUpload } from "react-icons/fi";
-import {
-  Dialog,
-  DialogTrigger,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-  DialogFooter,
-} from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
+import { Dialog, DialogTrigger, DialogContent } from "@/components/ui/dialog";
 import { DialogContents } from "../dialogContent/dialogContent";
+import { Button } from "../ui/button";
+import { formatDate } from "@/lib/utils";
 
-const Tables = {
-  TableDaftarTugas: ({ tasks }) => {
-    return (
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead>Nama Tugas</TableHead>
-            <TableHead className="text-center">Deadline</TableHead>
-            <TableHead className="text-center">Status</TableHead>
-            <TableHead className="text-center">Action</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody className="text-black">
-          {tasks.map((task, index) => (
-            <TableRow key={index}>
-              <TableCell className="py-3">{task.name}</TableCell>
+const TableDaftarTugas = ({ tasks, kelas }) => {
+  return (
+    <Table>
+      <TableHeader>
+        <TableRow>
+          <TableHead className="font-bold">Nama Tugas</TableHead>
+          <TableHead className="text-center font-bold">Deadline</TableHead>
+          <TableHead className="text-center font-bold">Status</TableHead>
+          <TableHead className="text-center font-bold">Action</TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody className="text-black">
+        {tasks
+          .filter((task) => task.kelas == kelas)
+          .map((task, index) => (
+            <TableRow key={index + 1}>
+              <TableCell className="py-3">{task.title}</TableCell>
               <TableCell className="text-center py-3">
-                {task.deadline}
+                {formatDate(task.due_date)}
               </TableCell>
               <TableCell className="text-center py-3">
                 {task.isCompleted ? (
@@ -81,44 +75,153 @@ const Tables = {
               </TableCell>
             </TableRow>
           ))}
-        </TableBody>
-      </Table>
-    );
-  },
-  TableRiwayat: ({ histories }) => {
-    return (
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead>Nama Tugas</TableHead>
-            <TableHead className="text-center">Tanggal Kirim</TableHead>
-            <TableHead className="text-center">Waktu Kirim</TableHead>
-            <TableHead className="text-center">Nilai</TableHead>
+      </TableBody>
+    </Table>
+  );
+};
+const TableRiwayat = ({ histories }) => {
+  return (
+    <Table>
+      <TableHeader>
+        <TableRow>
+          <TableHead className="font-bold">Nama Tugas</TableHead>
+          <TableHead className="text-center font-bold">Tanggal Kirim</TableHead>
+          <TableHead className="text-center font-bold">Waktu Kirim</TableHead>
+          <TableHead className="text-center font-bold">Nilai</TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody className="text-black">
+        {histories.map((history, index) => (
+          <TableRow key={index + 1}>
+            <TableCell className="py-3">{history.assignment}</TableCell>
+            <TableCell className="text-center py-3">{history.date}</TableCell>
+            <TableCell className="text-center py-3">{history.time}</TableCell>
+            <TableCell
+              className={`flex gap-4 justify-center items-center py-3 font-semibold ${
+                history.grade > 77
+                  ? "text-green-500"
+                  : history.grade >= 60
+                  ? "text-orange-500"
+                  : "text-red-500"
+              }`}
+            >
+              {history.grade}
+            </TableCell>
           </TableRow>
-        </TableHeader>
-        <TableBody className="text-black">
-          {histories.map((history, index) => (
-            <TableRow key={index}>
-              <TableCell className="py-3">{history.assignment}</TableCell>
-              <TableCell className="text-center py-3">{history.date}</TableCell>
-              <TableCell className="text-center py-3">{history.time}</TableCell>
-              <TableCell
-                className={`flex gap-4 justify-center items-center py-3 font-semibold ${
-                  history.grade > 77
-                    ? "text-green-500"
-                    : history.grade >= 60
-                    ? "text-orange-500"
-                    : "text-red-500"
-                }`}
+        ))}
+      </TableBody>
+    </Table>
+  );
+};
+const TableKelolaTugas = ({ assignments,kelas,handleDelete }) => {
+  return (
+    <Table>
+      <TableHeader>
+        <TableRow>
+          <TableHead className="font-bold">Judul Tugas</TableHead>
+          <TableHead className="text-center font-bold">
+            Deskripsi Tugas
+          </TableHead>
+          <TableHead className="text-center font-bold">
+            Deadline Tugas
+          </TableHead>
+          <TableHead className="text-center font-bold">Tipe File</TableHead>
+          <TableHead className="text-center font-bold">Action</TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody className="text-black">
+        {assignments.filter(asn => asn.kelas == kelas).map((assignment, index) => (
+          <TableRow key={index + 1}>
+            <TableCell className="py-3">{assignment.title}</TableCell>
+            <TableCell className="text-center py-3">
+              {assignment.description}
+            </TableCell>
+            <TableCell className="text-center py-3">
+              {formatDate(assignment.due_date)}
+            </TableCell>
+            <TableCell className="text-center py-3">
+              {assignment.file_url.split(".").pop()}
+            </TableCell>
+            <TableCell className="text-center py-3">
+              <Button className="bg-red-500 hover:bg-red-400" onClick={() => handleDelete(assignment.id)}>Delete</Button>
+            </TableCell>
+          </TableRow>
+        ))}
+      </TableBody>
+    </Table>
+  );
+};
+const TableKelolaUser = ({ users, handleDeleteUser }) => {
+  return (
+    <Table>
+      <TableHeader>
+        <TableRow>
+          <TableHead className="font-bold">Fullname</TableHead>
+          <TableHead className="text-center font-bold">Email</TableHead>
+          <TableHead className="text-center font-bold">Password</TableHead>
+          <TableHead className="text-center font-bold">Status</TableHead>
+          <TableHead className="text-center font-bold">Action</TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody className="text-black">
+        {users.map((user, index) => (
+          <TableRow key={index + 1}>
+            <TableCell className="py-3">{user.fullName}</TableCell>
+            <TableCell className="text-center py-3">{user.email}</TableCell>
+            <TableCell className="text-center py-3 text-red-500">
+              {user.password && "cannot be seen"}
+            </TableCell>
+            <TableCell className="text-center py-3">{user.role}</TableCell>
+            <TableCell className="text-center py-3">
+              <Button
+                className="bg-red-500 hover:bg-red-400"
+                onClick={() => handleDeleteUser(user.id)}
               >
-                {history.grade}
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    );
-  },
+                Delete
+              </Button>
+            </TableCell>
+          </TableRow>
+        ))}
+      </TableBody>
+    </Table>
+  );
+};
+const TableTugasSiswa = ({ studentAssignments }) => {
+  return (
+    <Table>
+      <TableHeader>
+        <TableRow>
+          <TableHead className="font-bold">Nama Siswa</TableHead>
+          <TableHead className="text-center font-bold">Type File</TableHead>
+          <TableHead className="text-center font-bold">Grade</TableHead>
+          <TableHead className="text-center font-bold">Action</TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody className="text-black">
+        {studentAssignments.map((SA, index) => (
+          <TableRow key={index + 1}>
+            <TableCell className="py-3">{SA.fullname}</TableCell>
+            <TableCell className="text-center py-3">{SA.filetype}</TableCell>
+            <TableCell className="text-center py-3">{SA.grade}</TableCell>
+            <TableCell className="text-center py-3">
+              <Button className="bg-[#0A355D] hover:bg-[#0a355ddc]">
+                Beri Nilai
+              </Button>
+              <Button className="bg-[#7FB557]" disabled>
+                Sudah dinilai
+              </Button>
+            </TableCell>
+          </TableRow>
+        ))}
+      </TableBody>
+    </Table>
+  );
 };
 
-export { Tables };
+export default {
+  TableTugasSiswa,
+  TableKelolaUser,
+  TableKelolaTugas,
+  TableDaftarTugas,
+  TableRiwayat,
+};

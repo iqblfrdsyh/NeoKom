@@ -7,7 +7,7 @@ export const metadata = {
   description: "E-Learning For High School",
 };
 
-const poppins = Poppins({ weight: "400" });
+const poppins = Poppins({ weight: "400", subsets: ["latin"] });
 
 export default function RootLayout({ children }) {
   return (

@@ -1,5 +1,5 @@
-const multer = require('multer');
-const path = require('path');
+const multer = require("multer");
+const path = require("path");
 const { Assignments } = require("../helper/relation"); // import dari relasi
 
 exports.getAllAssignments = async (req, res) => {
@@ -22,25 +22,29 @@ exports.getAssignmentsById = async (req, res) => {
   }
 };
 
-
 // Konfigurasi Multer
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, 'UploadModuls/'); // Folder tempat file akan disimpan
+    cb(null, "UploadModul/"); // Folder tempat file akan disimpan
   },
   filename: (req, file, cb) => {
-    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
     cb(null, `${uniqueSuffix}-${file.originalname}`);
   },
 });
 
 // Filter file untuk memastikan hanya jenis file tertentu yang diterima
 const fileFilter = (req, file, cb) => {
-  const allowedTypes = ['application/pdf', 'image/jpeg', 'image/png'];
+  const allowedTypes = ["application/pdf", "image/jpeg", "image/png"];
   if (allowedTypes.includes(file.mimetype)) {
     cb(null, true);
   } else {
-    cb(new Error('Tipe file tidak didukung. Hanya PDF, JPG, dan PNG yang diizinkan.'), false);
+    cb(
+      new Error(
+        "Tipe file tidak didukung. Hanya PDF, JPG, dan PNG yang diizinkan."
+      ),
+      false
+    );
   }
 };
 
@@ -54,7 +58,7 @@ const upload = multer({
 // Controller untuk membuat Assignment dengan file upload
 exports.createAssignments = async (req, res) => {
   // Gunakan Multer middleware untuk menangani file upload
-  upload.single('file_url')(req, res, async (err) => {
+  upload.single("file_url")(req, res, async (err) => {
     if (err instanceof multer.MulterError) {
       return res.status(400).json({ error: `Multer error: ${err.message}` });
     } else if (err) {
@@ -62,11 +66,11 @@ exports.createAssignments = async (req, res) => {
     }
 
     try {
-      const { title, description, due_date } = req.body;
+      const { title, description, due_date, kelas } = req.body;
 
       // Validasi apakah file diunggah
       if (!req.file) {
-        return res.status(400).json({ error: 'File tidak ditemukan.' });
+        return res.status(400).json({ error: "File tidak ditemukan." });
       }
 
       // Simpan data ke database
@@ -74,12 +78,13 @@ exports.createAssignments = async (req, res) => {
         title,
         description,
         due_date,
+        kelas,
         file_url: req.file.path, // Path file disimpan
       });
 
       res.status(201).json(assignment);
     } catch (error) {
-      res.status(500).json({ error: 'Gagal membuat Assignment baru.' });
+      res.status(500).json({ error: "Gagal membuat Assignment baru." });
     }
   });
 };
@@ -107,7 +112,7 @@ exports.createAssignments = async (req, res) => {
 
 exports.deleteAssignments = async (req, res) => {
   try {
-    const { id } = req.params;
+    const { id } = req.query;
 
     const assignment = await Assignments.findByPk(id);
     if (!assignment)
