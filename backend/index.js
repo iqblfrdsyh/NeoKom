@@ -1,5 +1,6 @@
 const express = require('express');
 const dotenv = require('dotenv');
+const cors = require('cors');
 const UserRoutes = require('./routes/UsersRoutes');
 const AssignmentsRoutes = require('./routes/AssignmentsRoutes');
 const StudentAssignmentsRoutes = require('./routes/StudentAssignmentsRoutes');

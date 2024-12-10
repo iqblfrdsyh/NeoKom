@@ -34,38 +34,38 @@ StudentAssignments.belongsTo(Assignments, {
   as: "assignments",
 });
 
-// Relasi StudentAssignments dengan Grades
-StudentAssignments.hasOne(Grades, {
-  foreignKey: "studentAssignmentId",
-  as: "grade",
-});
+// // Relasi StudentAssignments dengan Grades
+// StudentAssignments.hasOne(Grades, {
+//   foreignKey: "studentAssignmentId",
+//   as: "grade",
+// });
 
-Grades.belongsTo(StudentAssignments, {
-  foreignKey: "studentAssignmentId",
-  as: "studentAssignment",
-});
+// Grades.belongsTo(StudentAssignments, {
+//   foreignKey: "studentAssignmentId",
+//   as: "studentAssignment",
+// });
 
-// Relasi Grades dengan Histories
-Grades.hasMany(Histories, {
-  foreignKey: "gradeId",
-  as: "histories",
-});
+// // Relasi Grades dengan Histories
+// Grades.hasMany(Histories, {
+//   foreignKey: "gradeId",
+//   as: "histories",
+// });
 
-Histories.belongsTo(Grades, {
-  foreignKey: "gradeId",
-  as: "grade",
-});
+// Histories.belongsTo(Grades, {
+//   foreignKey: "gradeId",
+//   as: "grade",
+// });
 
-// Relasi StudentAssignments dengan Histories
-StudentAssignments.hasMany(Histories, {
-  foreignKey: "studentAssignmentId",
-  as: "historyRecords",
-});
+// // Relasi StudentAssignments dengan Histories
+// StudentAssignments.hasMany(Histories, {
+//   foreignKey: "studentAssignmentId",
+//   as: "historyRecords",
+// });
 
-Histories.belongsTo(StudentAssignments, {
-  foreignKey: "studentAssignmentId",
-  as: "studentAssignment",
-});
+// Histories.belongsTo(StudentAssignments, {
+//   foreignKey: "studentAssignmentId",
+//   as: "studentAssignment",
+// });
 
 // Export semua model dan relasi
 module.exports = { Users, StudentAssignments, Assignments, Grades, Histories };

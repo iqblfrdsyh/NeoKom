@@ -26,6 +26,9 @@ module.exports = {
       file_url: {
         type: Sequelize.TEXT,
       },
+      grade: {
+        type: Sequelize.INTEGER,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
